@@ -7,8 +7,9 @@ public class BossLine1 : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        transform.DOMoveX(480f, 2);
-        transform.DOMoveX(1490f, 2).SetDelay(4);
+        transform.localPosition = new Vector3(-2167, -506, 0);
+        transform.DOLocalMoveX(0, 2);
+        transform.DOLocalMoveX(2167, 2).SetDelay(4);
     }
 
 }

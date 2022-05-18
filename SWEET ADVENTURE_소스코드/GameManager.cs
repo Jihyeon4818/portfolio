@@ -36,7 +36,6 @@ public class GameManager : MonoBehaviour
         }
 
         score = 0;
-        //fade = GetComponent<Image>();
     }
 
     private void Update()
@@ -62,7 +61,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    // Start is called before the first frame update
+    // 추락 판정
     void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Player")
@@ -87,8 +86,6 @@ public class GameManager : MonoBehaviour
 
     }
 
-
-
     public void ReStartBtn()
     {
 
@@ -103,6 +100,7 @@ public class GameManager : MonoBehaviour
         score = 0;
         PlayerMove.instance.VelocityZero();
         moveCamera.instance.transform.position = new Vector3(-2.39f, 4.072773f, moveCamera.instance.transform.position.z);
+        moveCamera.instance.on = true;
         stage1Mountain.transform.position = new Vector3(7.786785f, 1.344044f, stage1Mountain.transform.position.z);
         stage2Mountain.transform.position = new Vector3(9.312808f, 1.474873f, stage1Mountain.transform.position.z);
         stage3Mountain.transform.position = new Vector3(10.9082f, 1.400113f, stage1Mountain.transform.position.z);
@@ -122,5 +120,13 @@ public class GameManager : MonoBehaviour
     public void Exit()
     {
         Application.Quit();
+    }
+
+    public void PlayerBuff(float maxSpeed, float coolTime, Vector2 boxSize)
+    {
+        PlayerMove.instance.maxSpeed = maxSpeed;
+        PlayerMove.instance.coolTime = coolTime;
+        PlayerMove.instance.boxSize = boxSize;
+        //PlayerMove.instance.attackBox.transform.position = boxPos;
     }
 }

@@ -12,6 +12,10 @@ public class Candy : MonoBehaviour
     float playerDistance;
     bool isFade;
     public int mapScore;
+
+    public float maxSpeed;
+    public float coolTime;
+    public Vector2 boxSize;
     // Start is called before the first frame update
     void Awake()
     {
@@ -61,9 +65,12 @@ public class Candy : MonoBehaviour
             GameManager.instance.gameUI.SetActive(false);
             PlayerMove.instance.uiStart = false;
             PlayerMove.instance.anim.SetBool("isRunning", false);
+            PlayerMove.instance.horizontal = 0;
+            PlayerMove.instance.Speed = 0;
             ready = false;
             stageClear.SetActive(true);
             Invoke("MoveMap", 4);
+            GameManager.instance.PlayerBuff(maxSpeed, coolTime, boxSize);
         }
     }
     void MoveMap()

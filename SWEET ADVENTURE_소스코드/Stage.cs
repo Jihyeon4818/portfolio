@@ -11,8 +11,8 @@ public class Stage : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        transform.DOMoveX(240f, 1.5f);
-        transform.DOMoveX(-480f, 0.5f).SetDelay(1.5f);
+        transform.DOLocalMoveX(-520f, 1.5f);
+        transform.DOLocalMoveX(-1440f, 0.5f).SetDelay(1.5f);
         Invoke("ClearSound", 1.2f);
         Invoke("SetActiveFalse", 2.5f);
     }

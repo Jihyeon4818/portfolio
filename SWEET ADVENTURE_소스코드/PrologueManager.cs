@@ -3,26 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System;
 
-[System.Serializable]
+[Serializable]
 public class Prologue
 {
-    //[TextArea]
-    //public string prologues;
     public Image cutToonImage;
     public Text text;
 }
 public class PrologueManager : MonoBehaviour
 {
-    //public SpriteRenderer cutToon;
-    //public Text text_Story;
-    //public Image cutToon2;
-
     int count = 0;
 
     public Prologue[] prologue;
 
-    private void Update()
+    void Update()
     {
         if (Input.GetMouseButtonDown(0))
         {
@@ -30,12 +25,10 @@ public class PrologueManager : MonoBehaviour
         }
     }
 
-    public void NextPrologue()
+    void NextPrologue()
     {
         if (count < prologue.Length)
         {
-            //text_Story.text = prologue[count].prologues;
-            //cutToon2.sprite = prologue[count].cutToonImage;
             if(prologue[count].cutToonImage != null)
             {
                 prologue[count].cutToonImage.gameObject.SetActive(true);
@@ -49,11 +42,11 @@ public class PrologueManager : MonoBehaviour
         }
         else
         {
-            SceneManager.LoadScene(1);
+            Skip();
         }
     }
     
-    public void Skip()
+    void Skip()
     {
         SceneManager.LoadScene(1);
     }

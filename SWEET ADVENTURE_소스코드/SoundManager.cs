@@ -11,7 +11,7 @@ public class SoundManager : MonoBehaviour
 
     public static SoundManager instance;
 
-    private void Awake()
+    private void Start()
     {
         if(instance == null)
         {
@@ -26,8 +26,6 @@ public class SoundManager : MonoBehaviour
         }
         
     }
-
-
     void OnSceneLoaded(Scene arg0, LoadSceneMode arg1)
     {
         for (int i = 0; i < bglist.Length; i++)
@@ -38,17 +36,6 @@ public class SoundManager : MonoBehaviour
             }
         }
     }
-
-    public void BGSoundVolume(float val)
-    {
-        mixer.SetFloat("BGSoundVolume", Mathf.Log10(val) * 20);
-    }
-
-    public void SFXVolume(float val)
-    {
-        mixer.SetFloat("SFXVolume", Mathf.Log10(val) * 20);
-    }
-
     public void SFXPlay(string sfxName, AudioClip clip)
     {
         GameObject go = new GameObject(sfxName + "Sound");
@@ -59,7 +46,6 @@ public class SoundManager : MonoBehaviour
 
         Destroy(go, clip.length);
     }
-
     public void BGSoundPlay(AudioClip clip)
     {
         bgSound.outputAudioMixerGroup = mixer.FindMatchingGroups("BGSound")[0];

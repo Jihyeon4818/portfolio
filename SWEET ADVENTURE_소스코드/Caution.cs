@@ -9,8 +9,9 @@ public class Caution : MonoBehaviour
     void Start()
     {
         Invoke("ActiveFalse", 6);
-        transform.DOMoveY(270, 2);
-        transform.DOMoveY(810, 2).SetDelay(4);
+        transform.DOLocalMoveY(0, 2);
+        transform.DOLocalMoveY(1072.5f, 2).SetDelay(4);
+        
     }
 
     // Update is called once per frame

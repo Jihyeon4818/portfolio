@@ -8,7 +8,7 @@ public class MainMenuManager : MonoBehaviour
 
     public void NewBtn()
     {
-        SceneManager.LoadScene("2-1Stage");
+        SceneManager.LoadScene("2-0Tutorial");
 
     }
 

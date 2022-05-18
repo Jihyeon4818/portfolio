@@ -10,6 +10,8 @@ public class PlayerMove : MonoBehaviour
 
     public bool uiStart;
 
+    public int horizontal = 0;
+
     public float maxSpeed;
     public float jumpPower;
     public float Speed;
@@ -20,6 +22,7 @@ public class PlayerMove : MonoBehaviour
     public int hp ;
     public Transform pos;
     public Vector2 boxSize;
+    public GameObject attackBox;
     float curTime;
     public float coolTime;
     public AudioClip[] clip;
@@ -54,28 +57,29 @@ public class PlayerMove : MonoBehaviour
 
     void Update()
     {
+        //Debug.Log(curTime);
         if (uiStart)
         {
             if (!isAttack)
             {
                 //점프
-                if (Input.GetButtonDown("Jump") && !anim.GetBool("isJumping"))
+                /*if (Input.GetButtonDown("Jump") && !anim.GetBool("isJumping"))
                 {
                     PlaySound("Jump");
                     rigid.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
                     anim.SetBool("isStopping", false);
                     anim.SetBool("isJumping", true);
-                }
+                }*/
 
                 //미끄러짐
-                if (Input.GetButtonUp("Horizontal"))
+                /*if (Input.GetButtonUp("Horizontal"))
                 {
                     anim.SetBool("isStopping", true);
                     rigid.velocity = new Vector2(rigid.velocity.normalized.x * 0.3f, rigid.velocity.y);
-                }
+                }*/
 
                 //방향 전환
-                if (Input.GetButton("Horizontal"))
+                /*if (Input.GetButton("Horizontal"))
                 {
                     anim.SetBool("isStopping", false);
                     //spriteRenderer.flipX = Input.GetAxisRaw("Horizontal") == -1;
@@ -87,8 +91,8 @@ public class PlayerMove : MonoBehaviour
                     {
                         transform.eulerAngles = new Vector3(0, 0, 0);
                     }
-
-                }
+                    
+                }*/
 
 
                 //idle 상태로
@@ -153,9 +157,9 @@ public class PlayerMove : MonoBehaviour
                     }
                 }
 
-                float h = Input.GetAxisRaw("Horizontal");
-                rigid.AddForce(Vector2.right * h, ForceMode2D.Impulse);
-
+                //float h = Input.GetAxisRaw("Horizontal");
+                rigid.AddForce(Vector2.right * horizontal, ForceMode2D.Impulse);
+                //Debug.Log(Speed);
                 //최대 속도
                 if (rigid.velocity.x > maxSpeed)
                 {
@@ -358,6 +362,7 @@ public class PlayerMove : MonoBehaviour
         if(hp <= 0)
         {
             GameManager.instance.gameOver.SetActive(true);
+            GameManager.instance.gameUI.SetActive(false);
             gameObject.layer = 20;
         }
     }
@@ -374,6 +379,80 @@ public class PlayerMove : MonoBehaviour
     {
         rigid.velocity = Vector2.zero;
     }
+
+    public void JumpBt()
+    {
+        if(!anim.GetBool("isJumping"))
+        {
+            PlaySound("Jump");
+            rigid.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
+            anim.SetBool("isStopping", false);
+            anim.SetBool("isJumping", true);
+        }
+    }
+
+    public void ButtonUp()
+    {
+        anim.SetBool("isStopping", true);
+        rigid.velocity = new Vector2(rigid.velocity.normalized.x * 0.3f, rigid.velocity.y);
+        horizontal = 0;
+
+    }
+
+    public void Button(string type)
+    {
+
+        switch (type)
+        {
+            case "L":
+                horizontal = -1;
+                break;
+            case "R":
+                horizontal = 1;
+                break;
+        }
+        anim.SetBool("isStopping", false);
+        //spriteRenderer.flipX = Input.GetAxisRaw("Horizontal") == -1;
+        if (horizontal == -1)
+        {
+            transform.eulerAngles = new Vector3(0, 180, 0);
+        }
+        else if (horizontal == 1)
+        {
+            transform.eulerAngles = new Vector3(0, 0, 0);
+        }
+    }
+
+    public void AttackButton()
+    {
+        
+        if (curTime <= 0)
+        {
+
+            if (!anim.GetBool("isJumping") && !damaged)
+            {
+                PlaySound("Attack");
+
+                anim.SetTrigger("atk");
+                curTime = coolTime;
+            }
+
+        }
+
+        if (anim.GetBool("isJumping") && !damaged)
+        {
+            if (curTime <= 0)
+            {
+
+                PlaySound("JumpAttack");
+
+                anim.SetTrigger("jumpAtk");
+                curTime = coolTime;
+
+            }
+        }
+    }
+
 
 }
 

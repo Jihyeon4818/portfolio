@@ -8,9 +8,9 @@ public class Clear : MonoBehaviour
 
     void Start()
     {
-
-        transform.DOMoveX(720f, 1.5f);
-        transform.DOMoveX(1440f, 0.5f).SetDelay(1.5f);
+        transform.DOLocalMoveX(520f, 1.5f);
+        //transform.DOMoveX(520f, 1.5f);
+        transform.DOLocalMoveX(1440f, 0.5f).SetDelay(1.5f);
 
     }
 

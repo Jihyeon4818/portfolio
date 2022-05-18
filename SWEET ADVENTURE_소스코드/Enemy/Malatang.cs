@@ -235,7 +235,6 @@ public class Malatang : MonoBehaviour
     {
         isAttack = true;
         rigid.gravityScale = 0;
-        //playerPosSave = player.transform.position;
         playerPosSave = new Vector3(player.transform.position.x, player.transform.position.y, transform.position.z);
     }
     void Dash() //대쉬 공격
@@ -267,7 +266,7 @@ public class Malatang : MonoBehaviour
         rigid.gravityScale = 0;
         isInvincible = true;
         InvincibleTime = 8;
-        //rigid.velocity = new Vector2((player.position - transform.position).normalized.x, rigid.velocity.y);
+
     }
 
     void AttackOver()

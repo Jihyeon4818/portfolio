@@ -1,10 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class StartUI : MonoBehaviour
 {
-    public GameObject gradation;
+    public GameObject buff;
     public GameObject areYR;
     public GameObject stage;
     public GameObject start;
@@ -12,11 +13,14 @@ public class StartUI : MonoBehaviour
     public bool isAYR;
     public bool isStart;
     public bool done;
+    public bool isBuff;
+    public bool buffUI;
     // Start is called before the first frame updatep
     void Start()
     {
-        done = true;
-        Invoke("Donefalse", second);
+        done = false;
+        isBuff = true;
+        //Invoke("Donefalse", second);
     }
 
     // Update is called once per frame
@@ -24,9 +28,40 @@ public class StartUI : MonoBehaviour
     {
         if (!done)
         {
-            Color color = areYR.GetComponent<SpriteRenderer>().color;
-            Color color2 = start.GetComponent<SpriteRenderer>().color;
-            if (!isAYR)
+            Color buffColor = buff.GetComponent<Text>().color;
+            Color color = areYR.GetComponent<Image>().color;
+            Color color2 = start.GetComponent<Image>().color;
+            if(buffUI)
+            {
+                if (buffColor.a < 1 && isBuff)
+                {
+                    buffColor.a += Time.deltaTime * 0.8f;
+                }
+                else
+                {
+                    isBuff = false;
+                }
+                if (!isBuff)
+                {
+                    if (buffColor.a > 0)
+                    {
+                        buffColor.a -= Time.deltaTime * 0.8f;
+                    }
+                    else
+                    {
+                        buffUI = false;
+                    }
+                }
+
+            }
+            else
+            {
+                buffUI = false;
+            }
+            
+
+
+            if (!isAYR && !buffUI)
             {
                 if (color.a < 1)
                 {
@@ -37,7 +72,7 @@ public class StartUI : MonoBehaviour
                     isAYR = true;
                 }
             }
-            else if (!isStart)
+            else if (!isStart && isAYR)
             {
                 if (color.a > 0)
                 {
@@ -57,7 +92,7 @@ public class StartUI : MonoBehaviour
                 if (color2.a > 0)
                 {
                     color2.a -= Time.deltaTime * 0.8f;
-                    gradation.GetComponent<SpriteRenderer>().color = color2;
+                    
                 }
                 else
                 {
@@ -67,9 +102,13 @@ public class StartUI : MonoBehaviour
                 }
 
             }
-            areYR.GetComponent<SpriteRenderer>().color = color;
-            stage.GetComponent<SpriteRenderer>().color = color;
-            start.GetComponent<SpriteRenderer>().color = color2;
+            areYR.GetComponent<Image>().color = color;
+            if (stage != null)
+            {
+                stage.GetComponent<Image>().color = color;
+            }
+            start.GetComponent<Image>().color = color2;
+            buff.GetComponent<Text>().color = buffColor;
         }
 
     }
